@@ -84,7 +84,9 @@ def track_parcel(tracking_code):
 inline_buttons = InlineKeyboard(
     [("اعلام زمان ⏰", "time"), ("حدیث گو 📖", "hadith")],
     [("پیگیری مرسوله تیپاکس 📦", "track_parcel")],
-    [("دستیار مومن 🤖", "ai_chat"), ("وکیل ⚖️", "lawyer"), ("روانشناس 🧠", "psychologist")],
+    [("دستیار مومن 🤖", "ai_chat")],
+    [("وکیل ⚖️", "lawyer")],
+    [("روانشناس 🧠", "psychologist")],
     [("راهنما ❓", "help"), ("اطلاعات سازنده 🧑‍💻", "info")]
 )
 
@@ -97,7 +99,7 @@ async def handle_message(message):
     state = user_states.get(chat_id)
 
     if state is None:
-        await message.reply("سلام! لطفاً گزینه‌ای را انتخاب کنید:", reply_markup=inline_buttons)
+        await message.reply("🤖 به ربات صراط خوش آمدید!\n\n✨ دستیار هوشمند اسلامی شما ✨\n\n📌 این ربات امکانات متنوعی را در اختیار شما قرار می‌دهد:", reply_markup=inline_buttons)
 
     elif state == "tracking":
         tracking_code = message.text.strip()
@@ -157,10 +159,10 @@ async def on_callback(callback_query):
         await callback_query.message.edit_text("🧠 پیام خود را برای روانشناس ارسال کنید:")
 
     elif callback_query.data == "help":
-        await callback_query.message.edit_text("🔹 راهنمای ربات: لطفاً یکی از گزینه‌های منو را انتخاب کنید.", reply_markup=inline_buttons)
+        await callback_query.message.edit_text("❓ **راهنمای ربات صراط** ❓\n\n🔹 برای استفاده از امکانات، یکی از گزینه‌های منو را انتخاب کنید.\n🔹 هر بخش دارای قابلیت‌های منحصربه‌فردی است که می‌توانید از آن بهره ببرید.\n\n📌 در صورت نیاز به راهنمایی بیشتر، با پشتیبانی در ارتباط باشید.", reply_markup=inline_buttons)
 
     elif callback_query.data == "info":
-        await callback_query.message.edit_text("🧑‍💻 ربات توسعه‌یافته توسط **احسان فضلی**.", reply_markup=inline_buttons)
+        await callback_query.message.edit_text("🧑‍💻 این ربات با افتخار توسط **احسان فضلی** و تیم **شفق** توسعه یافته است.\n\n🔹 ارائه‌دهنده خدمات هوش مصنوعی و ابزارهای کاربردی اسلامی 🔹", reply_markup=inline_buttons)
 
     elif callback_query.data == "return_to_main_menu":
         user_states[chat_id] = None
