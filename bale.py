@@ -6,7 +6,7 @@ import jdatetime
 import pytz
 
 # تنظیمات ربات
-bot_token = "‏1752263879:AR7EWOyRTpIcTXyQG7kq3ZbHFBaAyFV43rEC8krO"
+bot_token = "‏‏361743011:‏J1asUPWCBJmVW77rLrPt6YGB5HvtjL4ZTA197rvv"
 bot = Client(bot_token)
 
 # دیکشنری ذخیره وضعیت کاربران
