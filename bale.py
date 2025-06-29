@@ -11,7 +11,7 @@ session_name = "my_session"  # نام فایل سشن (هر اسم دلخواه)
 client = TelegramClient(session_name, api_id, api_hash)
 
 
-@client.on(events.NewMessage(pattern=r'^dl$', incoming=True))
+@client.on(events.NewMessage(pattern=r'^وای$', incoming=True))
 async def save_media(event):
     if not event.is_reply:
         await event.reply("❌ لطفاً روی یک پیام مدیادار ریپلای کنید.")
@@ -29,7 +29,6 @@ async def save_media(event):
             temp_path,
             caption=f"📥 ذخیره‌شده از چت: {event.chat.title or 'Private Chat'}"
         )
-        await event.reply("✅ مدیا در پیام‌های ذخیره‌شده ذخیره شد.")
     finally:
         try:
             os.remove(temp_path)
