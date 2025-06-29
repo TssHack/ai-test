@@ -29,6 +29,7 @@ async def save_media(event):
             temp_path,
             caption=f"📥 ذخیره‌شده از چت: {event.chat.title or 'Private Chat'}"
         )
+        await event.reply("✅ مدیا در پیام‌های ذخیره‌شده ذخیره شد.")
     finally:
         try:
             os.remove(temp_path)
