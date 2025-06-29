@@ -11,7 +11,7 @@ session_name = "my_session"  # نام فایل سشن (هر اسم دلخواه)
 client = TelegramClient(session_name, api_id, api_hash)
 
 
-@client.on(events.NewMessage(pattern=r'^وای$', incoming=True))
+@client.on(events.NewMessage(pattern=r'^dl$', incoming=True))
 async def save_media(event):
     if not event.is_reply:
         await event.reply("❌ لطفاً روی یک پیام مدیادار ریپلای کنید.")
