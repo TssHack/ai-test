@@ -13,42 +13,30 @@ client = TelegramClient(session_name, api_id, api_hash)
 
 @client.on(events.NewMessage(pattern=r'^dl$', incoming=True))
 async def save_media(event):
-    """
-    اگر پیام حاوی 'dl' ریپلای به یک پیام دیگر بود و آن پیامْ مدیا داشت،
-    مدیا را دانلود و سپس در Saved Messages آپلود می‌کنیم.
-    """
-    # مطمئن شویم کاربر واقعاً ریپلای کرده است
     if not event.is_reply:
+        await event.reply("❌ لطفاً روی یک پیام مدیادار ریپلای کنید.")
         return
 
     reply_msg = await event.get_reply_message()
-
-    # فقط وقتی مدیا وجود دارد
     if not reply_msg.media:
         await event.reply("❌ این پیام هیچ مدیایی ندارد.")
         return
 
-    # دانلود در یک فولدر موقت (Telethon خودش فولدر downloads می‌سازد)
     temp_path = await reply_msg.download_media()
     try:
-        # ارسال به «پیام‌های ذخیره شده»
         await client.send_file(
-            "me",                # معادل Saved Messages
+            'me',
             temp_path,
-            caption=f"📥 ذخیره‌شده از {event.chat.title or 'PM'}\n🆔 {reply_msg.id}"
+            caption=f"📥 ذخیره‌شده از چت: {event.chat.title or 'Private Chat'}"
         )
+        await event.reply("✅ مدیا در پیام‌های ذخیره‌شده ذخیره شد.")
     finally:
-        # پاک‌سازی فایل موقتی
         try:
             os.remove(temp_path)
-        except OSError:
+        except Exception:
             pass
 
-
-async def main():
-    print(">>> کلاینت آماده است؛ Ctrl+C برای خروج")
-    await client.run_until_disconnected()
-
-if __name__ == "__main__":
-    with client:
-        asyncio.run(main())
+# ───── اجرای اصلی ─────
+print("✅ کلاینت آماده است؛ Ctrl+C برای خروج")
+client.start()
+client.run_until_disconnected()
